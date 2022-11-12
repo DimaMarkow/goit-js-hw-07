@@ -7,6 +7,12 @@ const refs = {
   container: document.querySelector(`.gallery`),
 };
 
+const imgMarkup = createImgMarkup(galleryItems);
+
+refs.container.insertAdjacentHTML(`beforeend`, imgMarkup);
+
+refs.container.addEventListener(`click`, handleImgClick);
+
 function createImgMarkup(items) {
   return items
     .map(({ preview, original, description }) => {
@@ -25,7 +31,44 @@ function createImgMarkup(items) {
     .join(``);
 }
 
-const imgMarkup = createImgMarkup(galleryItems);
-console.log(imgMarkup);
+function handleImgClick(event) {
+  event.preventDefault();
+  if (!event.target.classList.contains(`gallery__image`)) {
+    return;
+  }
 
-refs.container.insertAdjacentHTML(`beforeend`, imgMarkup);
+  const instance = basicLightbox.create(`
+    <img class="gallery__image" src= '${event.target.dataset.source}', width="800" height="600">
+`);
+
+  instance.show();
+
+  window.addEventListener(`keydown`, handleEsc);
+}
+
+function handleEsc(event) {
+  if (!(event.code === `Escape`)) {
+    return;
+  }
+  instance.close();
+  window.removeEventListener(`keydown`, handleEsc);
+}
+
+//-----------------basicLightbox-----------------
+
+// const instance = basicLightbox.create(`
+//     <img src= 'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677_1280.jpg', width="800" height="600">
+// `);
+
+// const instance = basicLightbox.create(`
+//     <div class="modal">
+//         <p>
+//             Your first lightbox with just a few lines of code.
+//             Yes, it's really that simple.
+//         </p>
+//     </div>
+// `);
+
+// instance.show();
+// console.log(instance);
+//----------------------------------------------
