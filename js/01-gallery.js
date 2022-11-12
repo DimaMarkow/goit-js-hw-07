@@ -9,6 +9,10 @@ const refs = {
 
 const imgMarkup = createImgMarkup(galleryItems);
 
+let instance = basicLightbox.create(`
+    <img class="gallery__image" src= '', width="800" height="600">
+`);
+
 refs.container.insertAdjacentHTML(`beforeend`, imgMarkup);
 
 refs.container.addEventListener(`click`, handleImgClick);
@@ -37,10 +41,11 @@ function handleImgClick(event) {
     return;
   }
 
-  const instance = basicLightbox.create(`
+  const imageMarkUp = `
     <img class="gallery__image" src= '${event.target.dataset.source}', width="800" height="600">
-`);
-
+`;
+  console.log(imageMarkUp);
+  instance = basicLightbox.create(imageMarkUp);
   instance.show();
 
   window.addEventListener(`keydown`, handleEsc);
@@ -53,22 +58,3 @@ function handleEsc(event) {
   instance.close();
   window.removeEventListener(`keydown`, handleEsc);
 }
-
-//-----------------basicLightbox-----------------
-
-// const instance = basicLightbox.create(`
-//     <img src= 'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677_1280.jpg', width="800" height="600">
-// `);
-
-// const instance = basicLightbox.create(`
-//     <div class="modal">
-//         <p>
-//             Your first lightbox with just a few lines of code.
-//             Yes, it's really that simple.
-//         </p>
-//     </div>
-// `);
-
-// instance.show();
-// console.log(instance);
-//----------------------------------------------
