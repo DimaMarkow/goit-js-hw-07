@@ -11,7 +11,12 @@ const imgMarkup = createImgMarkup(galleryItems);
 
 refs.container.insertAdjacentHTML(`beforeend`, imgMarkup);
 
-refs.container.addEventListener(`click`, handleImgClick);
+let gallery = new SimpleLightbox(".gallery a", {
+  captionsData: `alt`,
+  captionDelay: 250,
+});
+
+// refs.container.addEventListener(`click`, handleImgClick);
 
 function createImgMarkup(items) {
   return items
@@ -24,14 +29,6 @@ function createImgMarkup(items) {
     .join(``);
 }
 
-function handleImgClick(event) {
-  event.preventDefault();
-  //   if (!event.target.classList.contains(`gallery__image`)) {
-  //     return;
-  //   }
-
-  let gallery = new SimpleLightbox(".gallery a", {
-    captionsData: `alt`,
-    captionDelay: 250,
-  });
-}
+// function handleImgClick(event) {
+//   event.preventDefault();
+// }

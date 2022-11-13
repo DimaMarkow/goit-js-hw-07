@@ -45,16 +45,20 @@ function handleImgClick(event) {
     <img class="gallery__image" src= '${event.target.dataset.source}', width="800" height="600">
 `;
   console.log(imageMarkUp);
-  instance = basicLightbox.create(imageMarkUp);
+  instance = basicLightbox.create(imageMarkUp, {
+    onShow: (instance) => window.addEventListener(`keydown`, handleEsc),
+    onClose: (instance) => window.removeEventListener(`keydown`, handleEsc),
+  });
   instance.show();
 
-  window.addEventListener(`keydown`, handleEsc);
+  // window.addEventListener(`keydown`, handleEsc);
 }
 
 function handleEsc(event) {
+  console.log(event);
   if (!(event.code === `Escape`)) {
     return;
   }
   instance.close();
-  window.removeEventListener(`keydown`, handleEsc);
+  // window.removeEventListener(`keydown`, handleEsc);
 }
